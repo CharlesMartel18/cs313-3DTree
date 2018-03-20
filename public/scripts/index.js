@@ -1,5 +1,6 @@
 var APP_KEY = 'a02f100000STXfVAAX';
-var REDIRECT_URI = 'http://localhost:5000/index.html';
+//var REDIRECT_URI = 'http://localhost:5000/index.html';
+var REDIRECT_URI = 'https://intense-plateau-59140.herokuapp.com/';
 
 // Create and configure the API client
 var fs = new FamilySearch({
