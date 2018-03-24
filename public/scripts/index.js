@@ -76,7 +76,7 @@ function getCurrentPerson(callback) {
  */
 function displayPerson(person){
   var $profileContainer = document.querySelector('.person-profile'),
-      $person_div = document.createElement(div),
+      $person_div = document.createElement('div'),
       $pre = document.createElement('pre');
   
   // Clear the loading message
