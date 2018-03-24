@@ -117,6 +117,4 @@ function handleError(error){
   alert('There was an error. Open the developer console to see the details.');
 }
 
-module.exports = {
-  authenticate: authenticate
-}
+module.exports = authenticate;

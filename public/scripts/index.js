@@ -1,3 +1,3 @@
-var familysearch = require('/familysearch.js');
+var familysearch = require('authenticate');
 
 familysearch.authenticate();
