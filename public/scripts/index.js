@@ -1,9 +1,9 @@
 var APP_KEY = 'a02f100000STXfVAAX';
-//var REDIRECT_URI = 'http://localhost:5000/index.html';
-var REDIRECT_URI = 'https://intense-plateau-59140.herokuapp.com/';
+var REDIRECT_URI = 'http://localhost:5000/index.html';
+//var REDIRECT_URI = 'https://intense-plateau-59140.herokuapp.com/';
 
 // Create and configure the API client
-var fs = new FamilySearch({
+var familysearch = new FamilySearch({
   environment: 'integration',
   appKey: APP_KEY,
   redirectUri: REDIRECT_URI,
@@ -12,7 +12,7 @@ var fs = new FamilySearch({
 
 // Process OAuth response, if we have one. true is returned if a code parameter
 // was found in the query. Otherwise false is returned.
-if(fs.oauthResponse(load)){
+if(familysearch.oauthResponse(load)){
   // When oauthResponse returns true it means it found a code and is
   // going to exchange it for an access token. The response is handled in
   // the callback parameter of that method.
@@ -20,7 +20,7 @@ if(fs.oauthResponse(load)){
 
 // We didn't find a oauth code in the query parameters so now we check to see
 // if we're already authenticated.
-else if(fs.getAccessToken()){
+else if(familysearch.getAccessToken()){
   load();
 }
 
@@ -28,7 +28,7 @@ else if(fs.getAccessToken()){
 // we wire up and display the sign in button so that the user can initiate authentication.
 else {
   document.getElementById('signin').addEventListener('click', function(){
-    fs.oauthRedirect();
+    familysearch.oauthRedirect();
   });
 }
 
@@ -43,7 +43,7 @@ function load(){
   document.querySelector('.auth').style.display = 'block';
   
   // First we fetch the user's person
-  getCurrentPerson(function(person){
+  getCurrentPerson(function(person) {
 
     // Then we display the data
     displayPerson(person);
@@ -57,8 +57,8 @@ function load(){
  * 
  * https://familysearch.org/developers/docs/api/tree/Current_Tree_Person_resource
  */
-function getCurrentPerson(callback){
-  fs.get('/platform/tree/current-person', {
+function getCurrentPerson(callback) {
+  familysearch.get('/platform/tree/current-person', {
     followRedirect: true
   }, function(error, response){
     if(error) {
@@ -66,6 +66,7 @@ function getCurrentPerson(callback){
     }
     else {
       callback(response.data.persons[0]);
+      console.log(response.data);
     }
   });
 }
@@ -75,16 +76,20 @@ function getCurrentPerson(callback){
  */
 function displayPerson(person){
   var $profileContainer = document.querySelector('.person-profile'),
-      $pre = document.createElement('pre');
+      $pre = document.createElement('pre'),
+      $pre2 = document.createElement('pre');
   
   // Clear the loading message
   $profileContainer.innerHTML = '';
   
   // Pretty print the display block of the person
-  $pre.innerHTML = JSON.stringify(person.display, null, 2);
+  var name = person.display.name;
+  $pre.innerHTML = name;
+  $pre2.innerHTML = JSON.stringify(person.display, null, 2);
   
   // Add the display block to the DOM
   $profileContainer.appendChild($pre);
+  $profileContainer.appendChild($pre2);
 }
 
 /**
