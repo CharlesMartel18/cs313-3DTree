@@ -84,15 +84,16 @@ function displayPerson(person){
   // Pretty print the display block of the person
   $person_div.innerHTML = person.display.name;
   $person_div.id = person.id;
+
+  // Add the display block to the DOM
+  $profileContainer.appendChild($person_div);
+
   $button = document.getElementById(person.id);
   $button.addEventListener('click', function (event) {
     $pre = document.createElement('pre');
     $pre.innerHTML = JSON.stringify(person.display, null, 2);
     $person_div.appendChild($pre);
   });
-
-  // Add the display block to the DOM
-  $profileContainer.appendChild($person_div);
 }
 
 /**
