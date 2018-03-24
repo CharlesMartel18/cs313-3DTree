@@ -76,20 +76,21 @@ function getCurrentPerson(callback) {
  */
 function displayPerson(person){
   var $profileContainer = document.querySelector('.person-profile'),
-      $pre = document.createElement('pre'),
-      $pre2 = document.createElement('pre');
+      $person_div = document.createElement(div),
+      $pre = document.createElement('pre');
   
   // Clear the loading message
   $profileContainer.innerHTML = '';
   
   // Pretty print the display block of the person
-  var name = person.display.name;
-  $pre.innerHTML = name;
-  $pre2.innerHTML = JSON.stringify(person.display, null, 2);
+  $person_div.innerHTML = person.display.name;
+  $person_div.id = person.id;
+  $button = document.getElementById(person.id);
+  $pre.innerHTML = JSON.stringify(person.display, null, 2);
   
   // Add the display block to the DOM
+  $profileContainer.appendChild($person_div);
   $profileContainer.appendChild($pre);
-  $profileContainer.appendChild($pre2);
 }
 
 /**
