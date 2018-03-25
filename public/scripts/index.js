@@ -98,7 +98,7 @@ function displayPerson(person){
 
       $profileContainer.appendChild($pre);
     } else if ($details.id == "_" + person.id) {
-        $profileContainer.removeChild("pre_" + person.id);
+        $profileContainer.removeChild(("pre_" + person.id));
         $details.id = person.id;
     }
   });
