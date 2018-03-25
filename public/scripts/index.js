@@ -130,7 +130,7 @@ function displayPerson(person) {
 */
 function personInfo(person, $profile) {
   // Show/hide person's information
-  $profile.addEventListener('click', function (event) {
+  $profile.firstChild.addEventListener('click', function (event) {
     if ($profile.id == person.id) {
       var $details = document.createElement('div'),
           $name = document.createElement('div'),
@@ -162,7 +162,6 @@ function personInfo(person, $profile) {
       $profile.id = "_" + $profile.id;
 
       $profile.appendChild($details);
-
 
     } else if ($profile.id == "_" + person.id) {
         $profile.removeChild(document.getElementById("details_" + person.id));
