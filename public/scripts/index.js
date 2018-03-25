@@ -120,7 +120,7 @@ function displayPerson(person) {
   $profileContainer.appendChild($person_div);
 
   var $details = document.getElementById(person.id);
-  personInfo();
+  personInfo($details);
 }
 
 function personInfo(details) {
