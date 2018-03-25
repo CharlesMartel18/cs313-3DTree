@@ -48,8 +48,10 @@ function load() {
     displayPerson(person);
 
     // And then the data for their ancestors
-    parents_ids = [person.display.familiesAsChild.parent1.resourceId, 
-                   person.display.familiesAsChild.parent2.resourceId];
+    var parents_ids = []
+    parents_ids[0] = person.display.familiesAsChild.parent1.resourceId;
+    parents_ids[1] = person.display.familiesAsChild.parent2.resourceId;
+    
     getParents(function(parents) {
       for (var i = 0; i < parents.length; i++) {
         displayPerson(parents[i])
@@ -87,7 +89,7 @@ function user_tree(callback) {
  */
 function getParents(callback, parents_ids) {
   ids_str = String(parents_ids[0]) + ',' + String(parents_ids[1]);
-  
+
   familysearch.get(('/platform/tree/persons?pids=' + ids_str), {
     followRedirect: true
   }, function(error, response){
