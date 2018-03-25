@@ -48,7 +48,7 @@ function load() {
     displayPerson(person);
 
     // And then the data for their ancestors
-    var parents_ids = []
+    var parents_ids = [];
     parents_ids[0] = person.display.familiesAsChild.parent1.resourceId;
     parents_ids[1] = person.display.familiesAsChild.parent2.resourceId;
     
@@ -75,7 +75,7 @@ function user_tree(callback) {
     }
     else {
       callback(response.data.persons[0]);
-      console.log(response.data);
+      console.log(response.data.persons[0]);
     }
   });
 }
@@ -114,7 +114,9 @@ function displayPerson(person) {
   $profileContainer.innerHTML = '';
   
   // Pretty print the display block of the person
-  $person_div.innerHTML = person.display.name;
+  $person_div.innerHTML = person.display.name + " Dad: " +
+    person.display.familiesAsChild.parent1.resourceId + " Mom: " + 
+    person.display.familiesAsChild.parent2.resourceId;
   $person_div.id = person.id;
 
   // Add the display block to the DOM
