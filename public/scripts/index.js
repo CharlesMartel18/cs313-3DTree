@@ -72,6 +72,26 @@ function getCurrentPerson(callback) {
 }
 
 /**
+ * Fetch another person. The API will respond with a redirect. We tell
+ * the SDK to automatically follow the redirect.
+ * 
+ * https://familysearch.org/developers/docs/api/tree/Current_Tree_Person_resource
+
+function getPersons(callback, person_id) {
+  familysearch.get(('/platform/tree/persons/' + person_id), {
+    followRedirect: true
+  }, function(error, response){
+    if(error) {
+      handleError(error);
+    }
+    else {
+      callback(response.data);
+      console.log(response.data);
+    }
+  });
+} */
+
+/**
  * Display a person by printing out the display data in a pre block
  */
 function displayPerson(person){
@@ -98,7 +118,7 @@ function displayPerson(person){
 
       $profileContainer.appendChild($pre);
     } else if ($details.id == "_" + person.id) {
-        $profileContainer.removeChild(("pre_" + person.id));
+        $profileContainer.removeChild(document.getElementById("pre_" + person.id));
         $details.id = person.id;
     }
   });
