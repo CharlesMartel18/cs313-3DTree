@@ -115,8 +115,8 @@ function displayPerson(person) {
   
   // Pretty print the display block of the person
   $person_div.innerHTML = person.display.name + " Dad: " +
-    person.display.familiesAsChild.parent1.resourceId + " Mom: " + 
-    person.display.familiesAsChild.parent2.resourceId;
+    person.display.familiesAsChild.parent1 + " Mom: " + 
+    person.display.familiesAsChild.parent2;
   $person_div.id = person.id;
 
   // Add the display block to the DOM
