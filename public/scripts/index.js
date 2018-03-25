@@ -123,8 +123,8 @@ function displayPerson(person) {
   personInfo($details);
 }
 
-function personInfo(details) {
-  details.addEventListener('click', function (event) {
+function personInfo($details) {
+  $details.addEventListener('click', function (event) {
     if ($details.id == person.id) {
       var $pre = document.createElement('pre');
       $pre.innerHTML = JSON.stringify(person.display, null, 2);
