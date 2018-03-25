@@ -44,6 +44,8 @@ function load() {
   
   // First we fetch the user's person
   user_tree(function(person) {
+    document.querySelector('.person-profile').innerHTML = '';
+
     // Then we display the data for the current user
     displayPerson(person);
 
@@ -109,11 +111,6 @@ function getParents(callback, parents_ids) {
 function displayPerson(person) {
   var $profileContainer = document.querySelector('.person-profile'),
       $person_div = document.createElement('div');
-      
-  // Clear the loading message
-  if ($profileContainer.innerHTML == '<p>Loading...</p>') {
-    $profileContainer.innerHTML = '';
-  }
   
   // Pretty print the display block of the person
   $person_div.innerHTML = person.display.name;
@@ -122,10 +119,14 @@ function displayPerson(person) {
   // Add the display block to the DOM
   $profileContainer.appendChild($person_div);
 
-  $details = document.getElementById(person.id);
-  $details.addEventListener('click', function (event) {
+  var $details = document.getElementById(person.id);
+  personInfo();
+}
+
+function personInfo(details) {
+  details.addEventListener('click', function (event) {
     if ($details.id == person.id) {
-      $pre = document.createElement('pre');
+      var $pre = document.createElement('pre');
       $pre.innerHTML = JSON.stringify(person.display, null, 2);
       $pre.id = "pre_" + person.id;
       $details.id = "_" + $details.id;
