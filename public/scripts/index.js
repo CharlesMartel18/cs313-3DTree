@@ -114,7 +114,8 @@ function displayPerson(person) {
       $profile_name = document.createElement('div');
   
   // Pretty print the display block of the person
-  $profile_name.innerHTML = person.display.name;
+  $profile_name.innerHTML = person.display.name + '<br />' +
+    JSON.stringify(person.display, null, 2) + '<br />';
   $profile.id = person.id;
 
   // Add the display block to the DOM when the profile is clicked
