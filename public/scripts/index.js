@@ -36,18 +36,25 @@ else {
  * This method is called once the user is signed in and begins
  * loading data from the API.
  */
-function load(){
+function load() {
   
   // Update displayed sections
   document.querySelector('.no-auth').style.display = 'none';
   document.querySelector('.auth').style.display = 'block';
   
   // First we fetch the user's person
-  getCurrentPerson(function(person) {
-
-    // Then we display the data
+  user_tree(function(person) {
+    // Then we display the data for the current user
     displayPerson(person);
-    
+
+    // And then the data for their ancestors
+    parents_ids = [person.display.familiesAsChild.parent1.resourceId, 
+                   person.display.familiesAsChild.parent2.resourceId];
+    getParents(function(parents) {
+      for (var i = 0; i < parents.length; i++) {
+        displayPerson(parents[i])
+      }
+    }, parents_ids);
   });
 }
 
@@ -57,7 +64,7 @@ function load(){
  * 
  * https://familysearch.org/developers/docs/api/tree/Current_Tree_Person_resource
  */
-function getCurrentPerson(callback) {
+function user_tree(callback) {
   familysearch.get('/platform/tree/current-person', {
     followRedirect: true
   }, function(error, response){
@@ -72,29 +79,32 @@ function getCurrentPerson(callback) {
 }
 
 /**
- * Fetch another person. The API will respond with a redirect. We tell
- * the SDK to automatically follow the redirect.
+ * Fetch parents of a person. The API will respond with a redirect. We tell
+ * the SDK to automatically follow the redirect. (What would be better would
+ * be to get the Relationships (parents, children, spouse(s)) for future use)
  * 
  * https://familysearch.org/developers/docs/api/tree/Current_Tree_Person_resource
-
-function getPersons(callback, person_id) {
-  familysearch.get(('/platform/tree/persons/' + person_id), {
+ */
+function getParents(callback, parents_ids) {
+  ids_str = String(parents_ids[0]) + ',' + String(parents_ids[1]);
+  
+  familysearch.get(('/platform/tree/persons?pids=' + ids_str), {
     followRedirect: true
   }, function(error, response){
     if(error) {
       handleError(error);
     }
     else {
-      callback(response.data);
+      callback(response.data.persons);
       console.log(response.data);
     }
   });
-} */
+}
 
 /**
  * Display a person by printing out the display data in a pre block
  */
-function displayPerson(person){
+function displayPerson(person) {
   var $profileContainer = document.querySelector('.person-profile'),
       $person_div = document.createElement('div');
       
@@ -128,7 +138,7 @@ function displayPerson(person){
  * Prints an error to the console and fires an alert telling the user to open the console.
  * Don't do this in a production app.
  */
-function handleError(error){
+function handleError(error) {
   console.error(error);
   alert('There was an error. Open the developer console to see the details.');
 }
