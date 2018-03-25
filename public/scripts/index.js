@@ -57,10 +57,10 @@ function load() {
         displayPerson(parents[i]);
 
         // then the parents of the "parents" ...
-        if (parents[i].display.familiesAsChild[0]) {
-          var ancestors_ids = get_parents_ids(parents[i]);
-          getParents(cb(ancestors), ancestors_ids);
-        }
+        //if (parents[i].display.familiesAsChild[0]) {
+        //  var ancestors_ids = get_parents_ids(parents[i]);
+        //  getParents(cb(ancestors), ancestors_ids);
+        //}
       }
     }, parents_ids);
   });
