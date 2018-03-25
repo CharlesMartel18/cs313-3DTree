@@ -111,7 +111,9 @@ function displayPerson(person) {
       $person_div = document.createElement('div');
       
   // Clear the loading message
-  $profileContainer.innerHTML = '';
+  if ($profileContainer.innerHTML == '<p>Loading...</p>') {
+    $profileContainer.innerHTML = '';
+  }
   
   // Pretty print the display block of the person
   $person_div.innerHTML = person.display.name;
