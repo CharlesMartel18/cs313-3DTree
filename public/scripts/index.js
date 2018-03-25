@@ -120,10 +120,10 @@ function displayPerson(person) {
   $profileContainer.appendChild($person_div);
 
   var $details = document.getElementById(person.id);
-  personInfo($details);
+  personInfo($details, person);
 }
 
-function personInfo($details) {
+function personInfo($details, person) {
   $details.addEventListener('click', function (event) {
     if ($details.id == person.id) {
       var $pre = document.createElement('pre');
