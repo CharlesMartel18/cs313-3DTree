@@ -50,16 +50,28 @@ function load() {
     displayPerson(person);
 
     // And then the data for their ancestors
-    var parents_ids = [];
-    parents_ids[0] = person.display.familiesAsChild[0].parent1.resourceId;
-    parents_ids[1] = person.display.familiesAsChild[0].parent2.resourceId;
-    
-    getParents(function(parents) {
+    parents_ids = get_parents_ids(person)
+    getParents(function cb(parents) {
+      // first the "parent" of "person"
       for (var i = 0; i < parents.length; i++) {
-        displayPerson(parents[i])
+        displayPerson(parents[i]);
+
+        // then the parents of the "parents" ...
+        if (parents[i].display.familiesAsChild[0]) {
+          var ancestors_ids = get_parents_ids(parents[i]);
+          getParents(cb(ancestors), ancestors_ids);
+        }
       }
     }, parents_ids);
   });
+}
+
+function get_parents_ids(person) {
+  var parents_ids = [];
+  parents_ids[0] = person.display.familiesAsChild[0].parent1.resourceId;
+  parents_ids[1] = person.display.familiesAsChild[0].parent2.resourceId;
+
+  return parents_ids;
 }
 
 /**
