@@ -111,34 +111,66 @@ function getParents(callback, parents_ids) {
 function displayPerson(person) {
   var $profileContainer = document.querySelector('.person-profile'),
       $profile = document.createElement('div'),
-      $profile_name = document.createElement('div')
+      $profile_name = document.createElement('div');
   
   // Pretty print the display block of the person
   $profile_name.innerHTML = person.display.name;
   $profile.id = person.id;
 
-  // Add the display block to the DOM
+  // Add the display block to the DOM when the profile is clicked
   $profile.appendChild($profile_name);
   $profileContainer.appendChild($profile);
 
-  var $details = document.getElementById(person.id);
-  personInfo($details, person, $profile);
+  personInfo(person, $profile);
 }
 
-function personInfo($details, person, $profile) {
-  $details.addEventListener('click', function (event) {
-    if ($details.id == person.id) {
-      var $pre = document.createElement('pre');
-      $pre.innerHTML = JSON.stringify(person.display, null, 2);
-      $pre.id = "pre_" + person.id;
-      $details.id = "_" + $details.id;
+/** 
+ * Adds an event listener to each person; gets or closes info for that
+ * person alternately.
+*/
+function personInfo(person, $profile) {
+  // Show/hide person's information
+  $profile.addEventListener('click', function (event) {
+    if ($profile.id == person.id) {
+      var $details = document.createElement('div'),
+          $name = document.createElement('div'),
+          $gender = document.createElement('div'),
+          $lifespan = document.createElement('div'),
+          $birth_date = document.createElement('div'),
+          $birth_place = document.createElement('div');
+      if (person.display.name) {
+        $name.innerHTML = "Name: " + person.display.name;
+      }
+      if (person.display.gender) {
+        $gender.innerHTML = "Gender: " + person.display.gender;
+      }
+      if (person.display.lifespan) {
+        $lifespan.innerHTML = "Lifespan: " + person.display.lifespan;
+      }
+      if (person.display.birthDate) {
+        $birth_date.innerHTML = "Birth Date: " + person.display.birthDate;
+      }
+      if (person.display.birthPlace) {
+        $birth_place.innerHTML = "Birth Place: " + person.display.birthPlace;
+      }
+      $details.appendChild($name);
+      $details.appendChild($gender);
+      $details.appendChild($lifespan);
+      $details.appendChild($birth_date);
+      $details.appendChild($birth_place);
+      $details.id = "details_" + person.id;
+      $profile.id = "_" + $profile.id;
 
-      $profile.appendChild($pre);
-    } else if ($details.id == "_" + person.id) {
-        $profile.removeChild(document.getElementById("pre_" + person.id));
-        $details.id = person.id;
+      $profile.appendChild($details);
+
+
+    } else if ($profile.id == "_" + person.id) {
+        $profile.removeChild(document.getElementById("details_" + person.id));
+        $profile.id = person.id;
     }
   });
+
+
 }
 
 /**
