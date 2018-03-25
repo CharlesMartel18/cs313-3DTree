@@ -110,20 +110,22 @@ function getParents(callback, parents_ids) {
  */
 function displayPerson(person) {
   var $profileContainer = document.querySelector('.person-profile'),
-      $person_div = document.createElement('div');
+      $profile = document.createElement('div'),
+      $profile_name = document.createElement('div')
   
   // Pretty print the display block of the person
-  $person_div.innerHTML = person.display.name;
-  $person_div.id = person.id;
+  $profile_name.innerHTML = person.display.name;
+  $profile.id = person.id;
 
   // Add the display block to the DOM
-  $profileContainer.appendChild($person_div);
+  $profile.appendChild($profile_name);
+  $profileContainer.appendChild($profile);
 
   var $details = document.getElementById(person.id);
-  personInfo($details, person, $profileContainer);
+  personInfo($details, person, $profile);
 }
 
-function personInfo($details, person, $profileContainer) {
+function personInfo($details, person, $profile) {
   $details.addEventListener('click', function (event) {
     if ($details.id == person.id) {
       var $pre = document.createElement('pre');
@@ -131,9 +133,9 @@ function personInfo($details, person, $profileContainer) {
       $pre.id = "pre_" + person.id;
       $details.id = "_" + $details.id;
 
-      $profileContainer.appendChild($pre);
+      $profile.appendChild($pre);
     } else if ($details.id == "_" + person.id) {
-        $profileContainer.removeChild(document.getElementById("pre_" + person.id));
+        $profile.removeChild(document.getElementById("pre_" + person.id));
         $details.id = person.id;
     }
   });
