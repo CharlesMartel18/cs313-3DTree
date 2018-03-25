@@ -90,14 +90,14 @@ function displayPerson(person){
 
   $details = document.getElementById(person.id);
   $details.addEventListener('click', function (event) {
-    if (details.id == person.id) {
+    if ($details.id == person.id) {
       $pre = document.createElement('pre');
       $pre.innerHTML = JSON.stringify(person.display, null, 2);
       $pre.id = "pre_" + person.id;
-      details.id = "_" + details.id;
+      $details.id = "_" + $details.id;
 
       $profileContainer.appendChild($pre);
-    } else if (details.id == "_" + person.id) {
+    } else if ($details.id == "_" + person.id) {
         $profileContainer.removeChild("pre_" + person.id);
         $details.id = person.id;
     }
