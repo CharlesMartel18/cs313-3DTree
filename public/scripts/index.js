@@ -49,8 +49,8 @@ function load() {
 
     // And then the data for their ancestors
     var parents_ids = [];
-    parents_ids[0] = person.display.familiesAsChild.parent1.resourceId;
-    parents_ids[1] = person.display.familiesAsChild.parent2.resourceId;
+    parents_ids[0] = person.display.familiesAsChild[0].parent1.resourceId;
+    parents_ids[1] = person.display.familiesAsChild[0].parent2.resourceId;
     
     getParents(function(parents) {
       for (var i = 0; i < parents.length; i++) {
@@ -114,8 +114,7 @@ function displayPerson(person) {
   $profileContainer.innerHTML = '';
   
   // Pretty print the display block of the person
-  $person_div.innerHTML = person.display.name + " " +
-  JSON.stringify(person.display.familiesAsChild, null, 2);
+  $person_div.innerHTML = person.display.name;
   $person_div.id = person.id;
 
   // Add the display block to the DOM
