@@ -88,21 +88,19 @@ function displayPerson(person){
   // Add the display block to the DOM
   $profileContainer.appendChild($person_div);
 
-  $button = document.getElementById(person.id);
-  $button.addEventListener('click', function (event) {
+  $open_details = document.getElementById(person.id);
+  $open_details.addEventListener('click', function (event) {
+    $open_details.id = "_" + $open_details.id;
     $pre = document.createElement('pre');
-    $close = document.createElement('button');
-
     $pre.innerHTML = JSON.stringify(person.display, null, 2);
-    $close.textContent = "X";
 
-    $profileContainer.appendChild($close);
     $profileContainer.appendChild($pre);
+  });
 
-    $close.addEventListener('click', function (event) {
-      $profileContainer.removeChild($pre);
-      $profileContainer.removeChild($close);
-    })
+  $close_details = document.getElementById("_" + person.id);
+  $close_details.addEventListener('click', function (event) {
+    $profileContainer.removeChild($pre);
+    $close_details.id = person.id;
   });
 }
 
